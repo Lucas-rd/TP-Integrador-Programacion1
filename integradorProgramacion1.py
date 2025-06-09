@@ -40,7 +40,7 @@ def generar_medicamentos(cantidad):
 # Ahora definiremos las funciones de ORDENAMIENTO
 # #--------------#
 
-# Definimos la funcion que hara el metodo por "burbujeo" comparando los elementos por el campo "nombre" y devuelve una nueva lista ordenada sin modificar la original
+# Definimos la funcion que hara el ordenamiento por metodo de "burbujeo" comparando los elementos "vecinos" por el campo "nombre" y devuelve una nueva lista ordenada sin modificar la original
 def burbuja_medicamentos(lista):
     nueva_lista = lista.copy()
     n = len(nueva_lista)
@@ -53,7 +53,7 @@ def burbuja_medicamentos(lista):
 
 # Definimos la funcion que hara el ordenamiento por "Merge Sort" usando el concepto de recursividad y dividiendo la lista en mitades y devuelve una nueva lista ordenada sin modificar la original
 def merge_sort_medicamentos(lista):
-    if len(lista) <= 1:
+    if len(lista) <= 1: # CASO BASE: listas de 0 o 1 elemento ya están ordenadas
         return lista
 
     medio = len(lista) // 2
@@ -93,8 +93,17 @@ def quick_sort_medicamentos(lista):
         return lista
     else:
         pivote = lista[0]
-        menores = [x for x in lista[1:] if x["nombre"] <= pivote["nombre"]]
-        mayores = [x for x in lista[1:] if x["nombre"] > pivote["nombre"]]
+
+        menores = []
+        mayores = []
+
+        for i in lista[1:]:
+            if i["nombre"] <= pivote["nombre"]:
+                menores.append(i)
+            else:
+                mayores.append(i)
+
+
         return quick_sort_medicamentos(menores) + [pivote] + quick_sort_medicamentos(mayores)
 
 # Puntos a tener en cuenta de Quick Sort:
@@ -132,72 +141,3 @@ def busqueda_binaria(lista, objetivo):
             derecha = medio - 1
     return None
 
-
-# #--------------#
-# Prueba de codigo
-# #--------------#
-
-# Generar datos
-longitud_lista = int(input("Ingrese la cantidad de elementos que desea que tenga la lista de medicamentos: "))
-lista_meds = generar_medicamentos(longitud_lista)
-objetivo = random.choice(lista_meds)["nombre"]
-
-print(f"\n Buscando medicamento: {objetivo}")
-
-# Se realiza la búsqueda del medicamento en distintos escenarios para comparar eficiencia:
-# 1. Búsqueda lineal sobre lista desordenada.
-# 2. Ordenamiento + búsqueda binaria con Burbuja.
-# 3. Ordenamiento + búsqueda binaria con Merge Sort.
-# 4. Ordenamiento + búsqueda binaria con Quick Sort.
-# 5. Usamos time.perf_counter() ya que es ideal para medir cuánto tarda en ejecutarse un algoritmo o comparar rendimiento
-
-# --- Búsqueda lineal en lista desordenada ---
-tiempo_inicial = time.perf_counter()
-resultado_lineal = busqueda_lineal(lista_meds, objetivo)
-tiempo_final = time.perf_counter()
-print("\n Búsqueda lineal:")
-print(f"Resultado: {resultado_lineal}")
-print(f"Tiempo de Busqueda: {tiempo_final - tiempo_inicial:.15f} segundos")
-
-# --- Ordenar con Burbuja + Búsqueda binaria ---
-tiempo_inicial_ordenamiento = time.perf_counter()
-lista_burbuja = burbuja_medicamentos(lista_meds)
-tiempo_final_ordenamiento = time.perf_counter()
-
-tiempo_inicial = time.perf_counter()
-resultado_burbuja = busqueda_binaria(lista_burbuja, objetivo)
-tiempo_final = time.perf_counter()
-print("\n Ordenamiento Burbuja + Búsqueda binaria:")
-print(f"Resultado: {resultado_burbuja}")
-print(f"Tiempo de Ordenamiento: {tiempo_final_ordenamiento - tiempo_inicial_ordenamiento:.15f} segundos")
-print(f"Tiempo de Busqueda: {tiempo_final - tiempo_inicial:.15f} segundos")
-
-# --- Ordenar con Merge Sort + Búsqueda binaria ---
-tiempo_inicial_ordenamiento = time.perf_counter()
-lista_merge = merge_sort_medicamentos(lista_meds)
-tiempo_final_ordenamiento = time.perf_counter()
-
-tiempo_inicial = time.perf_counter()
-resultado_merge = busqueda_binaria(lista_merge, objetivo)
-tiempo_final = time.perf_counter()
-print("\n Ordenamiento Merge Sort + Búsqueda binaria:")
-print(f"Resultado: {resultado_merge}")
-print(f"Tiempo de Ordenamiento: {tiempo_final_ordenamiento - tiempo_inicial_ordenamiento:.15f} segundos")
-print(f"Tiempo de Busqueda: {tiempo_final - tiempo_inicial:.15f} segundos")
-
-# --- Ordenar con Quick Sort + Búsqueda binaria ---
-tiempo_inicial_ordenamiento = time.perf_counter()
-lista_quick = quick_sort_medicamentos(lista_meds)
-tiempo_final_ordenamiento = time.perf_counter()
-
-tiempo_inicial = time.perf_counter()
-resultado_quick = busqueda_binaria(lista_quick, objetivo)
-tiempo_final = time.perf_counter()
-print("\n Ordenamiento Quick Sort + Búsqueda binaria:")
-print(f"Resultado: {resultado_quick}")
-print(f"Tiempo de Ordenamiento: {tiempo_final_ordenamiento - tiempo_inicial_ordenamiento:.15f} segundos")
-print(f"Tiempo de Busqueda: {tiempo_final - tiempo_inicial:.15f} segundos")
-
-# Conclusión esperada:
-# - La búsqueda binaria es mucho más rápida que la lineal, pero requiere ordenamiento previo.
-# - Merge y Quick Sort son más eficientes que Burbuja, especialmente con listas grandes.
