@@ -2,8 +2,11 @@
 Codigo en Python para TP integrador de la materia Programacion 1 de la Tecnicatura en Porgramacion de la UTN
 
 **Nota:** Para probar nuestro codigo y evaluar los algoritmos de Busqueda y Ordenamientos hay que levantar la consola y ejecutar el siguiente comando:
-## python prueba_integrador.py 
-# Ingresar por consola la cantidad de elementos que se desea guardar en la lista generada aleatoriamente. En el video usamos de ejemplo: 1000 y 10000
+
+## 
+    python prueba_integrador.py 
+# 
+    Ingresar por consola la cantidad de elementos que se desea guardar en la lista generada aleatoriamente. En el video usamos de ejemplo: 1000 y 10000
 
 ## Integrantes:
     Camila Cynthia Reyna
