@@ -22,4 +22,5 @@ Codigo en Python para TP integrador de la materia Programacion 1 de la Tecnicatu
 ## Tema elegido:
     Algoritmo de Ordenamiento y Busqueda
 
-## Link Video Youtube:
+## Link Video Youtube: 
+    https://www.youtube.com/watch?v=-Z0UQl2VNUk
